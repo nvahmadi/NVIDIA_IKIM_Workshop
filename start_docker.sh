@@ -24,7 +24,7 @@ docker run --rm -it \
 	--env WORKDIR="$WORKDIR_CONTAINER" \
 	--env DATADIR="$DATADIR_CONTAINER" \
     -v "$WORKDIR_HOST":"$WORKDIR_CONTAINER" \
-    -v "$DATADIR_HOST":"$DATADIR_CONTAINER" \
+    -v "$DATADIR_HOST":"$DATADIR_CONTAINER":ro \
     --network=host \
     --name "essen_workshop_$LOGNAME" \
     projectmonai/monai:latest
