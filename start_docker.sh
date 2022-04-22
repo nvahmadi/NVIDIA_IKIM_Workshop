@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 set -u
 
+no_proxy="localhost,127.0.0.1,127.0.0.0/8,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16"
+http_proxy="http://proxy.ikim.uk-essen.de:3128"
+
 # Configure the mountpoints so that the shared datadir is visible from the
 # user's work directory.
 WORKDIR_HOST="/local/work/nvidia-workshop-2022-04/user/$LOGNAME"
@@ -23,6 +26,12 @@ docker run --rm -it \
 	--workdir="$WORKDIR_CONTAINER" \
 	--env WORKDIR="$WORKDIR_CONTAINER" \
 	--env DATADIR="$DATADIR_CONTAINER" \
+	--env no_proxy="$no_proxy" \
+	--env NO_PROXY="$no_proxy" \
+	--env http_proxy="$http_proxy" \
+	--env https_proxy="$http_proxy" \
+	--env HTTP_PROXY="$http_proxy" \
+	--env HTTPS_PROXY="$http_proxy" \
     -v "$WORKDIR_HOST":"$WORKDIR_CONTAINER" \
     -v "$DATADIR_HOST":"$DATADIR_CONTAINER":ro \
     --network=host \
