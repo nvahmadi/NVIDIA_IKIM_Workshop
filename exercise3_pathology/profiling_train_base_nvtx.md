@@ -1,3 +1,22 @@
+# Your Tasks:
+The python file `train_evaluate_nvtx.py` implements a full training & evaluation pipeline for patch-wise classification on the [CAMELYON16](https://camelyon16.grand-challenge.org/) dataset. To run profiling, the code needs to be executed from a script, rather than from a notebook, which makes interactive experiments a little more difficult. To make this still an engaging exercise, we suggest you to walk through this exercise with the following steps:
+1. Run the profiler on a baseline/"naive" implementation: `run_baseline.sh`
+2. Install Nsight and inspect the saved `.qdrep` profile
+3. Identify the regions in the code that implement the following optimizations:
+   - Execute transforms (incl. augmentation) on the GPU (CuCIM) instead of CPU (NumPy)
+   - Using a PatchWSIDataset with CuCIM loader for I/O instead of OpenSlide
+   - Multi-worker dataloader with pinned memory
+   - Use ImageNet pre-trained weights instead of randomly initialized model 
+   - Automated Mixed Precision and gradient scaling during model optimization
+   - Using Novograd instead of Adam optimizer
+   - Use a learning rate scheduler (cosine annealing)
+4. Run the profiler on an implementation with the above optimizations: run_optimized.sh
+
+The following sections give you all the necessary background for:
+ - For profiling with [NVIDIA Nsight™ Systems](https://developer.nvidia.com/nsight-systems)
+ - How code authors used [MONAI NVTX-Range implementations](https://docs.monai.io/en/stable/utils.html?highlight=range#module-monai.utils.nvtx) to tag their code with profiling flags using [NVIDIA® Tools Extension Library (NVTX)](https://github.com/NVIDIA/NVTX)
+ - How to read & interpret the `.qdrep` profile before and after optimization.
+
 # NVIDIA Nsight Systems
 [NVIDIA Nsight™ Systems](https://developer.nvidia.com/nsight-systems) is a system-wide performance analysis tool designed to visualize an application’s algorithms, help to identify the largest opportunities to optimize, and tune to scale efficiently across any quantity or size of CPUs and GPUs.
 
