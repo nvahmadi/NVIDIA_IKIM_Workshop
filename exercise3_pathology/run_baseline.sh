@@ -1,3 +1,5 @@
+unzip /workspace/dataset/CAMELYON16.zip -d /workspace
+
 nsys profile \
      --delay 50 \
      --duration 30 \
